@@ -35,7 +35,7 @@ function merge(source, start, middle, end) {
 function mergeSort(source, start, end) {
     var middle;
     if (start < end) {
-        middle = Math.floor((start + end) / 2);
+        middle = (start + end) >> 1; //Math.floor((start + end) / 2)
         mergeSort(source, start, middle);   //分治左边部分
         mergeSort(source, middle + 1, end); //分治右边部分
         merge(source, start, middle, end);  //合并已经排序的左右两部分

@@ -21,11 +21,11 @@ function List(source) {
             len = source.length,
             key,
             node,
-            last = this.head;
+            last = null;
         for (; i < len; i++) {
             key = source[i];
             node  = new Node(last, key, null);
-            if (last === this.head) {
+            if (last === null) {
                 this.head = node;
             } else {
                 last.next = node;

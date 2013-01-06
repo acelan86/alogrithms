@@ -8,59 +8,57 @@ Heap.getParentIndex = function (i) {
     return i >> 1; //Math.floor(i / 2);
 };
 Heap.getLeftIndex = function (i) {
-    return i << 1;
+    return (i << 1) + 1;
 };
 Heap.getRightIndex = function (i) {
-    return i << 1 + 1;
-}
+    return (i << 1) + 2;
+};
 Heap.maxHeapify = function (heap, i) {
     var source = heap.data,
-        heapSize = heap.getHeapSize(),
         l = Heap.getLeftIndex(i),
         r = Heap.getRightIndex(i),
         largest,
         key;
 
-    if (l <= heapSize && source[l] > source[i]) {
+    if (l < heap.heapSize && source[l] > source[i]) {
         largest = l;
     } else {
         largest = i;
     }
-    if (r <= heapSize && source[r] > source[i]) {
+    if (r < heap.heapSize && source[r] > source[largest]) {
         largest = r;
     }
     if (largest !== i) {
+        //exchange: source[i] <--> source[largest]
         key = source[i];
         source[i] = source[largest];
         source[largest] = key;
-        Heap.maxHeapify(source, largest);
+        Heap.maxHeapify(heap, largest);
     }
-}
+};
 /**
  * 创建一个最大堆
  * @param  {[type]} source [description]
  * @return {[type]}        [description]
  */
-function buildMaxHeap(source) {
-    var heap = new Heap(souce),
-        souce = heap.data;
-
-    for (i = heap.length >> 1; i >= 0; i--) {
-        Heap.maxHeapify(heap, i);
+function MaxHeap(source) {
+    Heap.call(this, source);
+    for (i = (this.length - 1) >> 1; i >= 0; i--) {
+        Heap.maxHeapify(this, i);
     }
-    return heap;
 }
 
 
 function heapSort(source) {
-    var heap = buildMaxHeap(source),
+    var heap = new MaxHeap(source), //用待排序数组建立一个最大堆
         source = heap.data,
         i;
 
-    for (i = heap.getHeapLength(); i >= 1; i--) {
+    for (i = heap.length - 1; i >= 0; i--) {
         key = source[0];
         source[0] = source[i];
-        heap.heapSize--;
-        Heap.maxHeapify(heap, 1);
+        source[i] = key;
+        heap.heapSize--; //堆排除最后一个最大的元素
+        Heap.maxHeapify(heap, 0); //对第一个元素最大堆化
     }
 }

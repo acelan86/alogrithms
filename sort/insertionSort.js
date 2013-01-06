@@ -8,8 +8,10 @@
 function insertionSort(source) {
     var i,
         j = 1,
+        len = source.length,
         key;
-    while (key = source[j]) {
+    for (; j < len; j++) {
+        key = source[j];
         i = j - 1;
         while (i >= 0 && source[i] > key) {
             //排序
@@ -18,7 +20,6 @@ function insertionSort(source) {
         }
         //key找到了该插入的位置
         source[i + 1] = key;
-        j++;
     }
 }
 

@@ -17,38 +17,62 @@
         <script src="../sort/bubbleSort.js"></script>
         <script src="../sort/heapSort.js"></script>
         <script src="../sort/quickSort.js"></script>
+        <script src="../sort/countingSort.js"></script>
         <script>
-            var source = [5, 2, 4, 6, 1, 3],
-                result = [1, 2, 3, 4, 5, 6];
-            test('insertionSort', function () {
-                var s = source.slice(0);
-                insertionSort(s);
-                deepEqual(s, result, "结果source:" + s);
+            var source = [
+                    [5,2,4,6,1,3],
+                    [1,3,4,5,6,3,4,7,8,9,4,10,12,24],
+                    [0,12,2,3,45,6,3,7,8,3,5,6,9,11,12,0],
+                    [0,0,0,0,0,0,0,0,0]
+                ],
+                result = [
+                    [1,2,3,4,5,6],
+                    [1,3,3,4,4,4,5,6,7,8,9,10,12,24],
+                    [0,0,2,3,3,3,5,6,6,7,8,9,11,12,12,45],
+                    [0,0,0,0,0,0,0,0,0]
+                ];
+            function eachArray(arr, func) {
+                var i = 0,
+                    len = arr.length;
+                for(; i < len; i++) {
+                    func(i, arr[i]);
+                }
+            }
+            test("insertionSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = insertionSort(s = s.slice(0)) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
-            test('merge', function () {
-                var s = [2, 4, 5, 1, 3, 6];
-                merge(s, 0, 2, 5);
-                deepEqual(s, result, "结果source:" + s);
+            test("mergeSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = mergeSort(s = s.slice(0), 0, s.length - 1) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
-            test('mergeSort', function () {
-                var s = source.slice(0);
-                mergeSort(s, 0, 5);
-                deepEqual(s, result, "结果source:" + s);
+            test("bubbleSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = bubbleSort(s = s.slice(0)) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
-            test('bubbleSort', function () {
-                var s = source.slice(0);
-                bubbleSort(s);
-                deepEqual(s, result, "结果source:" + s);
+            test("heapSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = heapSort(s = s.slice(0)) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
-            test('heapSort', function () {
-                var s = source.slice(0);
-                heapSort(s);
-                deepEqual(s, result, "结果source:" + s);
+            test("quickSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = quickSort(s = s.slice(0), 0, s.length - 1) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
-            test('quickSort', function () {
-                var s = source.slice(0);
-                quickSort(s, 0, 5);
-                deepEqual(s, result, "结果source:" + s);
+            test("countingSort", function () {
+                eachArray(source, function (i, s) {
+                    var r = countingSort(s = s.slice(0)) || s;
+                    deepEqual(r, result[i], "结果source:" + s + ' | result:' + r);
+                });
             });
         </script>
     </body>

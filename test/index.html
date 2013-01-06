@@ -47,7 +47,7 @@
             });
             test('quickSort', function () {
                 var s = source.slice(0);
-                quickSort(s);
+                quickSort(s, 0, 5);
                 deepEqual(s, result, "结果source:" + s);
             });
         </script>
